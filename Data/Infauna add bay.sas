@@ -3,7 +3,7 @@ data M;
 set tx.txmamg;
 if est="MA" then delete;
 format date mmddyy10.;
-GM2=GM2*.7/1000;   /* MACROFAUNA biomasss as "mg/M²" using an assumed dw:N ratio of 7%, 10cm sediment depth, and 1000 L/m³  */
+GM2=GM2*1/1000;   /* MACROFAUNA biomasss as "mg/M²", Convert to volume by diving by 0.1 m (10 cm) or multiplying* by 10, using a rough assumed dw:N ratio of 10% (Chapter 12 in Higgins and Thiel, 1988), and 1000 L/m³  */
 label gm2="Infauna(g N/m²)";
 run;
 

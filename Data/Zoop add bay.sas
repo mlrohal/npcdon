@@ -25,7 +25,7 @@ if est="NC" and  sta="C" then Bay="CC";
 if est="NC" and  sta="D" then Bay="CC";
 if est="NC" and  sta="E" then Bay="CC";
 format date mmddyy10.;
-Zoop=ddens*.07/1000;  /* Zooplankton biomasss as "mg N/L" using an assumed dw:N ratio of 7%, and 1000 L/m³  */
+Zoop=ddens*.07/1000;  /* Zooplankton biomasss as "mg N/L" using an assumed dw:N ratio of 7% (Phytoplankton 4-9% of dry weight Parson's et al. 1961), and 1000 L/m³  */
 label Zoop="Zooplankton(mg N/L)";
 run;
 
@@ -55,7 +55,7 @@ proc export data=Zoop (where=(Bay="&bay"))
   run;
 %mend ez;
 
-%ez (BB)
+%ez (BB) 
 %ez (US)
 %ez (LS)
 %ez (LB)
