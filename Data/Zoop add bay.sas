@@ -36,16 +36,16 @@ proc means data=t noprint;
  output out=tr mean=Zoop;
  run;
 
-proc means data=tr noprint;
- by bay date est ;
- var Zoop;
- output out=ts mean=Zoop;
- run;
+*proc means data=tr noprint;
+ *by bay date est ;
+ *var Zoop;
+ *output out=ts mean=Zoop;
+ *run;
 
-proc means data=ts noprint;
- by bay date ; 
+proc means data=tr noprint;
+ by bay date sta; 
  var Zoop;
- output out=Zoop(drop=_type_ _freq_) mean=Zoop;
+ output out=Zoop(drop=_type_ _freq_ sta) mean=Zoop;
  run;
 
 %macro ez (bay);

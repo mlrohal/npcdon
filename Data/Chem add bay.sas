@@ -36,19 +36,19 @@ proc means data=c noprint;
  run;
 
 proc means data=cr noprint;
- by bay date est ;
+by bay date sta ;
  var DIN DON;
- output out=cs mean=DIN DON;
+ output out=cs(drop=_type_ _freq_ sta) mean=DIN DON;
  run;
 
-proc means data=cs noprint;
- by bay date ; 
- var DIN DON;
- output out=N(drop=_type_ _freq_) mean=DIN DON;
- run;
+*proc means data=cs noprint;
+ *by bay date ; 
+ *var DIN DON;
+ *output out=N(drop=_type_ _freq_) mean=DIN DON;
+ *run;
 
-data NN;
- set N;
+data N;
+ set cs;
  if din+don=. then delete;
  DIN=DIN*0.028; /* convert umol/L to mg N/L  */
  DON=DON*0.028;
@@ -56,7 +56,7 @@ data NN;
  run;
 
 %macro ez (bay);
-proc export data=NN (where=(Bay="&bay")) 
+proc export data=N (where=(Bay="&bay")) 
   outfile = "C:\Users\mrohal\Desktop\NPZ Model\npcdon\Data\&bay._N.csv"
   dbms=csv replace;
   run;

@@ -20,16 +20,16 @@ proc means data=M1 noprint;
  output out=Mr mean=gm2;
  run;
 
-proc means data=Mr noprint;
- by bay date est ;
- var gm2;
- output out=Ms mean=gm2;
- run;
+*proc means data=Mr noprint;
+ *by bay date est ;
+ *var gm2;
+ *output out=Ms mean=gm2;
+ *run;
 
-proc means data=Ms noprint;
- by bay date ; 
+proc means data=Mr noprint;
+ by bay date sta ; 
  var gm2;
- output out=MG(drop=_type_ _freq_) mean=gm2;
+ output out=MG(drop=_type_ _freq_ sta) mean=gm2;
  run;
 
 
