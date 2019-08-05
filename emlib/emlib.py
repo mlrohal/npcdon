@@ -228,10 +228,9 @@ def GFModel(model, Observation):
         indexsim = 0
 
         for k in model.computedT:
-
             indexsim+=1 #we are one index ahead
             #obs happend at the same exact deltaT of model response
-            if k == i :
+            if k == i.date() :
                 matches+=1
                 O.append(obsXM[indexobs])
                 E.append(model.computed[indexsim-1])
@@ -1216,7 +1215,7 @@ class Model:
         self.computedT = computedT
         emlog.debug("Completed Integration, created np.array shape:"+str(self.computed.shape))
         return
-    def Draw(self, block=True,graph='ts',order=None):
+    def Draw(self, block=True,graph='ts',order=None, legend=None):
         """
         Plot Computed Series
 
@@ -1231,7 +1230,8 @@ class Model:
             plt.figure()
             plt.suptitle("Computed Integral")
             plt.plot(self.computedT, self.computed)
-            plt.show(block=block)
+            if legend:
+                plt.legend(legend)
 
         if graph == 'fp':
             plt.figure()
@@ -1390,8 +1390,7 @@ def GF_BruteForceMSERANGE(Model,Calibration,Observation,maxruns,TimeSeries=None,
             Calibration.Print()
             bestMSE = GF.MSE
             GF.Print()
-        else:
-            emlog.info("Int:" +str(i) + " RMSD Current: "+ str(GF.RMSD) + " Best:" + str(bestRMSD) + " Orig:" +str(orgRMSD))
+        
     return Calibration
 
 def GF_BruteForceRMSD(Model,Calibration,Observation,maxruns,TimeSeries=None,start=None,end=None,dt=None):
