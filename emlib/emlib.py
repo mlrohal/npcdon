@@ -17,7 +17,7 @@ from matplotlib.dates import MonthLocator, WeekdayLocator, DateFormatter, YearLo
 
 
 FORMAT = '%(levelname)s -%(lineno)s- %(message)s'
-logging.basicConfig(format=FORMAT, level=logging.DEBUG)
+logging.basicConfig(format=FORMAT, level=logging.INFO)
 emlog = logging.getLogger('EASYMODEL')
 
 
@@ -1256,7 +1256,7 @@ class Model:
             plt.show(block=block)
 
     def Validate(self,Observation,graph=False, title="Computed Integral",ylabel='',xlabel=''
-                 ,ylim=False, xlim=False, linecolor='k',linewidth=2.0,savefig=False):
+                 ,ylim=False, xlim=False, linecolor='k',linewidth=2.0,savefig=False, legend=None):
         """
         Validate model output to observed data
 
@@ -1293,8 +1293,8 @@ class Model:
             plt.xlabel(xlabel)
             years = YearLocator()
 
-            ax.xaxis.set_major_locator(months)
-            ax.xaxis.set_major_formatter(MYFmt)
+            ax.xaxis.set_major_locator(years)
+            ax.xaxis.set_major_formatter(yearFmt)
             ax.xaxis.set_minor_locator(months)
 
 
@@ -1302,15 +1302,20 @@ class Model:
                 plt.ylim(ylim)
             if xlim:
                 plt.ylim(xlim)
+           
             '''ax.plot(self.computedT,self.computed, linecolor, linewidth=linewidth)'''
-            ax.plot(self.computedT, self.computed, linecolor, linewidth=linewidth)
-            ax.plot(Observation.T, Observation.XM, 'ro', color='grey')
+            ax.plot(self.computedT, self.computed,linewidth=linewidth)
+            ax.plot(Observation.T, Observation.XM, 'ro')
             ax.errorbar(Observation.T, Observation.XM, yerr=Observation.XE, color='grey', fmt='o', linewidth=1.4)
             DefaultSize = fig.get_size_inches()
+            fig.dpi = 500
             labels = ax.get_xticklabels()
-
-            plt.setp(labels, 'rotation', 45, fontsize = 10)
-            fig.set_size_inches( (DefaultSize[0]*2, DefaultSize[1]*1) )
+            if legend:
+                ax.legend(legend)
+            plt.setp(labels, 'rotation', 45, fontsize = 12)
+            plt.rc('axes', titlesize=12)     # fontsize of the axes title
+            plt.rc('axes', labelsize=12)
+            fig.set_size_inches( (DefaultSize[0]*4, DefaultSize[1]*2) )
             if savefig:
                 plt.savefig(savefig, bbox_inches='tight', dpi = (500))
             plt.show()

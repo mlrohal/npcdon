@@ -3,8 +3,8 @@ data M;
 set tx.txmamg;
 if est="MA" then delete;
 format date mmddyy10.;
-GM2=GM2*1/1000;   /* MACROFAUNA biomasss as "mg/M²", Convert to volume by diving by 0.1 m (10 cm) or multiplying* by 10, using a rough assumed dw:N ratio of 10% (Chapter 12 in Higgins and Thiel, 1988), and 1000 L/m³  */
-label gm2="Infauna(g N/m²)";
+GM2=GM2*.1;   /* (Originally g/m2) MACROFAUNA biomasss as "mg/M²" * 1000, Convert to Liters 1/1000, Convert to N * .10 (using a rough assumed dw:N ratio of 10% (Chapter 12 in Higgins and Thiel, 1988)  */
+label gm2="Infauna(mg N/L)";
 run;
 
 proc sort data=M; BY bay date est sta rep SEC; run;
