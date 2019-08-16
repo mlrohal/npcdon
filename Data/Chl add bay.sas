@@ -27,6 +27,7 @@ if est="NC" and  sta="C" then Bay="CC";
 if est="NC" and  sta="D" then Bay="CC";
 if est="NC" and  sta="E" then Bay="CC";
 format date mmddyy10.;
+Chl = Chl*8.85*0.001; /*conversion to from ug/l to mg N/L based on average N:Chl ratio in shallow marine water from Yentsch and Vaccaro */
 run;
 proc sort data=c; BY bay date est sta DEPTH; run;
 proc means data=c noprint;
