@@ -31,14 +31,14 @@ run;
 proc sort data=c; BY bay date est sta DEPTH; run;
 proc means data=c noprint;
  by bay date est sta;
- var DIN DON;
- output out=cr mean=DIN DON;
+ var DIN DON Temp;
+ output out=cr mean=DIN DON Temp;
  run;
 
 proc means data=cr noprint;
-by bay date sta ;
- var DIN DON;
- output out=cs(drop=_type_ _freq_ sta) mean=DIN DON;
+by bay date sta;
+ var DIN DON Temp;
+ output out=cs(drop=_type_ _freq_ sta) mean=DIN DON Temp;
  run;
 
 *proc means data=cs noprint;
@@ -57,7 +57,7 @@ data N;
 
 %macro ez (bay);
 proc export data=N (where=(Bay="&bay")) 
-  outfile = "C:\Users\mrohal\Desktop\NPZ Model\npcdon\Data\&bay._N.csv"
+  outfile = "C:\Users\mrohal\Desktop\NPZ Model\npcdon\Data\&bay._NT.csv"
   dbms=csv replace;
   run;
 %mend ez;
